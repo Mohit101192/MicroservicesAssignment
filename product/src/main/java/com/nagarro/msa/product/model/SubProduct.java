@@ -3,9 +3,11 @@ package com.nagarro.msa.product.model;
 import lombok.Data;
 
 @Data
-public class City {
+public class SubProduct {
 
 	private int id;
-	private String city;
+	private String name;
+	private int price;
+	
 	
 }

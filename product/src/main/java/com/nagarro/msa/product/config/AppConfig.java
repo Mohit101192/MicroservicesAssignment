@@ -1,62 +1,57 @@
 package com.nagarro.msa.product.config;
 
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Scope;
+import org.springframework.core.io.ClassPathResource;
 
+import com.google.gson.Gson;
 import com.nagarro.msa.product.model.City;
+import com.nagarro.msa.product.model.Product;
 
 @Configuration
 public class AppConfig {
 
 	
 	
-	@Bean
-	public List<City> cityList()
+	@Bean("cityList")
+	@Scope("singleton")
+	public List<City> cityList() throws IOException
 	{
+		
+		
+		
 		List<City> cityList = new ArrayList<>();
+		File file = new ClassPathResource("city.json").getFile();
 		
-		City city = new City();
-		city.setCity("Delhi");
-		city.setCityId(1);
+		Gson gson = new Gson();
 		
-		City city1 = new City();
-		city1.setCity("Gurgaon");
-		city1.setCityId(2);
-		
-		City city2 = new City();
-		city2.setCity("Bangalore");
-		city2.setCityId(3);
-		
-		City city3 = new City();
-		city3.setCity("Noida");
-		city3.setCityId(4);
-		
-		City city4 = new City();
-		city4.setCity("Pune");
-		city4.setCityId(5);
-		
-		City city5 = new City();
-		city5.setCity("Hyderabad");
-		city5.setCityId(6);
-		
-		
-		City city6 = new City();
-		city6.setCity("Mumbai");
-		city6.setCityId(7);
-		
-		cityList.add(city);
-		cityList.add(city1);
-		cityList.add(city2);
-		cityList.add(city3);
-		cityList.add(city4);
-		cityList.add(city5);
-		cityList.add(city6);
+		cityList = gson.fromJson(new FileReader(file), List.class);
 		
 		return cityList;
 		
+	}
+	
+	@Bean("productMap")
+	@Scope("singleton")
+	public Map<String, List<Product>> productMap() throws IOException
+	{
+		HashMap<String, List<Product>> initProductMap ;
+		
+		File file = new ClassPathResource("product.json").getFile();
+		
+		Gson gson = new Gson();
+		
+		initProductMap = gson.fromJson(new FileReader(file), HashMap.class);
+		return initProductMap;
 	}
 	
 	
