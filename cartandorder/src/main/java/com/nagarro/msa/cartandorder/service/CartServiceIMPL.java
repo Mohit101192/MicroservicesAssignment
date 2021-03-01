@@ -64,4 +64,14 @@ public class CartServiceIMPL implements CartService{
 		return productList;
 	}
 
+	@Override
+	public String removeFromCart(String username, CartProduct cartProduct) {
+		if(cartTable.containsKey(username))
+		{
+			Cart presentCart = cartTable.get(username);
+			presentCart.getProductList().remove(cartProduct);
+		}
+		return IApplicationConstants.PRODUCT_REMOVED_SUCCESS_MESSAGE;
+	}
+
 }

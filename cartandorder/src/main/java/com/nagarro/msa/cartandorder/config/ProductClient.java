@@ -7,10 +7,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.nagarro.msa.cartandorder.model.SubProduct;
 
-@FeignClient(value="productClient")
+@FeignClient(name="product")
 public interface ProductClient {
 
-	@RequestMapping(method = RequestMethod.GET, value = "/product/productDetails?cityId={cityId}&productId={productId}&subProductId={subProductId}")
-    SubProduct getProductDetail(@RequestParam String cityId,@RequestParam int productId,@RequestParam int subProductId);
+	@RequestMapping(method = RequestMethod.GET, value = "/productDetails")
+    SubProduct getProductDetail(@RequestParam("cityId") String cityId,@RequestParam("productId") int productId,@RequestParam("subProductId") int subProductId);
 	
 }

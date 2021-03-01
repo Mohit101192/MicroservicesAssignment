@@ -23,7 +23,11 @@ public class SignUpServiceImpl implements SignUpService{
 	
 	@Autowired
 	@Qualifier("userMap")
-	private Map<User, User> userMap;
+	private Map<String, User> userMap;
+	
+	@Autowired
+	@Qualifier("mobileIndex")
+	private Map<String, String> mobileIndex;
 	
 	@Override
 	public SignUpResponse signUp(User user) {
@@ -57,20 +61,19 @@ public class SignUpServiceImpl implements SignUpService{
 		UserValidation validateUser = new UserValidation();
 		validateUser.setValid(true);
 		
-		if(user!=null && userMap.containsKey(user))
+		if(user!=null && userMap.containsKey(user.getUsername()))
 		{
 			validateUser.setValid(false);
+			validateUser.getFailureMessageList().add(IApplicationConstants.USERNAME_DUPLICATE_MESSAGE);
 			
-			if(userMap.get(user).getUsername().equalsIgnoreCase(user.getUsername()))
-			{
-				validateUser.getFailureMessageList().add(IApplicationConstants.USERNAME_DUPLICATE_MESSAGE);
-			}
-			if(userMap.get(user).getMobile().equalsIgnoreCase(user.getMobile()))
-			{
-				validateUser.getFailureMessageList().add(IApplicationConstants.MOBILE_DUPLICATE_MESSAGE);
-			}
+		
 		}
 		
+		if(mobileIndex.containsKey(user.getMobile()))
+		{
+			validateUser.setValid(false);
+			validateUser.getFailureMessageList().add(IApplicationConstants.MOBILE_DUPLICATE_MESSAGE);
+		}
 		
 		return validateUser;
 	}

@@ -3,6 +3,7 @@ package com.nagarro.msa.product.config;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -13,6 +14,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 import org.springframework.core.io.ClassPathResource;
 
+import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 import com.nagarro.msa.product.model.City;
 import com.nagarro.msa.product.model.Product;
@@ -33,8 +35,9 @@ public class AppConfig {
 		File file = new ClassPathResource("city.json").getFile();
 		
 		Gson gson = new Gson();
-		
-		cityList = gson.fromJson(new FileReader(file), List.class);
+		Type listOfMyClassObject = new TypeToken<List<City>>() {}.getType();
+
+		cityList = gson.fromJson(new FileReader(file), listOfMyClassObject);
 		
 		return cityList;
 		
@@ -49,8 +52,8 @@ public class AppConfig {
 		File file = new ClassPathResource("product.json").getFile();
 		
 		Gson gson = new Gson();
-		
-		initProductMap = gson.fromJson(new FileReader(file), HashMap.class);
+		Type listOfMyClassObject = new TypeToken<HashMap<String, List<Product>>>() {}.getType();
+		initProductMap = gson.fromJson(new FileReader(file), listOfMyClassObject);
 		return initProductMap;
 	}
 	

@@ -26,7 +26,7 @@ public class ProductServiceIMPL implements ProductService{
 	@Override
 	public SubProduct productDetails(String cityId,int productId, int subProductId) {
 		SubProduct subProduct = new SubProduct();
-		
+		System.out.println("CityId :" +cityId);
 		List<Product> productList = productList(cityId);
 		
 		for(Product product : productList)

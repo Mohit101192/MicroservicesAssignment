@@ -35,7 +35,18 @@ public class CartController {
 		
 		return sr;
 	}
-	
+	@PostMapping("/removeFromCart")
+	public ServiceResponse removeFromCart(@RequestBody CartProduct cartProduct,@RequestParam String username )
+	{
+		
+		String message = cartService.removeFromCart(username, cartProduct);
+		ServiceResponse sr = new ServiceResponse();
+		sr.setMessage(message);
+		sr.setStatus(IApplicationConstants.SUCCESS_STATUS);
+		sr.setStatusCode(HttpStatus.ACCEPTED.value());
+		
+		return sr;
+	}
 	
 	@GetMapping("productDetails")
 	public List<SubProduct> productDetails(@RequestParam String username,@RequestParam String cityId)

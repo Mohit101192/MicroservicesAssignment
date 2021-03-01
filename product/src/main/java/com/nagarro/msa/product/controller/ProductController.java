@@ -25,7 +25,7 @@ public class ProductController {
 	}
 	
 	@GetMapping("/productDetails")
-	public SubProduct productDetails(@RequestParam String cityId,@RequestParam int productId, @RequestParam int subProductId)
+	public SubProduct productDetails(@RequestParam("cityId") String cityId,@RequestParam int productId, @RequestParam int subProductId)
 	{
 		return productService.productDetails(cityId,productId,subProductId);	
 	}
